@@ -1,17 +1,24 @@
 import bpy
 
-def update(self, value):
-    print('DEBUG: STT_panel: update')
-    pass
-    #invoke operator modal
+
+# def set_activated(self, value):
+#     self['val'] = value
+#     if value:
+#         print(value)
+#         bpy.ops.object.screen_to_text_operator('INVOKE_DEFAULT')
+
+# def get_activated(self):
+#     return self['val']
+
+def update_activated(self, value):
+    bpy.ops.object.screen_to_text_operator('INVOKE_DEFAULT')
 
 # Create Properties
 PROPS = [
     ('STT_convert_text', bpy.props.StringProperty(name='Text', default='. - ; = / % & @ #')),
-    ('STT_activated', bpy.props.BoolProperty(name='Activated', default=False, update = update)),
-    ('STT_Font_Proportion', bpy.props.FloatProperty(name='Font Proportion', default=5.0, min=0.001, max=100.0))
+    ('STT_activated', bpy.props.BoolProperty(name='Activated', default=False, update=update_activated)),
+    ('STT_Font_Proportion', bpy.props.IntProperty(name='Font Proportion', default=25, min=3, max=300))
 ]
-
 
 # for (prop_name, prop_value) in PROPS:
 #          setattr(bpy.types.Scene, prop_name, prop_value)
@@ -19,7 +26,7 @@ PROPS = [
 
 # https://blender.stackexchange.com/questions/61618/add-a-custom-curve-mapping-property-for-an-add-on
 # return node group containing curve, create node group if none
-def STT_CurveNode():
+def CurveNode():
     if 'STT_CustomCurveStorage' not in bpy.data.node_groups:
         ng = bpy.data.node_groups.new('STT_CustomCurveStorage', 'ShaderNodeTree')
         #ng.fake_user = True
@@ -30,13 +37,11 @@ curve_node_mapping = {} # makes node name relevant
 # return specific curve node, stored as value given 'curve_name' as a key
 # node value will likely be stock 'RGB Curves' stored by Blender
 # where subsequent curves will be 'RGB Curves.001' etc
-def STT_CurveData(curve_name):
+def CurveData(curve_name):
     if curve_name not in curve_node_mapping:
-        cn = STT_CurveNode().new('ShaderNodeRGBCurve')
+        cn = CurveNode().new('ShaderNodeRGBCurve')
         curve_node_mapping[curve_name] = cn.name
-    return STT_CurveNode()[curve_node_mapping[curve_name]]
-
-
+    return CurveNode()[curve_node_mapping[curve_name]]
 
 class STT_PT_panel(bpy.types.Panel):
     bl_idname = "STT_PT_panel"
@@ -53,10 +58,11 @@ class STT_PT_panel(bpy.types.Panel):
         col = self.layout.column()
         for (prop_name, _) in PROPS:
             row = col.row()
-            if prop_name == 'STT_Font_Proportion':
-                row.prop(context.scene, prop_name, text="Font Proportion %")
-            else:
-                row.prop(context.scene, prop_name)
-        self.layout.template_curve_mapping(STT_CurveData('STT_CustomCurve'), "mapping")
+            row.prop(context.scene, prop_name)
+
+        self.layout.template_curve_mapping(CurveData('STT_CustomCurve'), "mapping")
+
+        row = col.row()
+        row.prop(context.space_data, "lock_camera")
 
 # bpy.utils.register_class(STT_PT_panel)

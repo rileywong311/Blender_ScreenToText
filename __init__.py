@@ -10,6 +10,7 @@ bl_info = {
 import bpy
 
 # . for relative path works read by Blender
+from . STT_operator import STT_OT_Operator, menu_func
 from . STT_panel import PROPS, STT_PT_panel
 
 
@@ -17,10 +18,16 @@ def register():
     print("Hello World!!")
     for (prop_name, prop_value) in PROPS:
         setattr(bpy.types.Scene, prop_name, prop_value)
+    bpy.utils.register_class(STT_OT_Operator)
+    bpy.types.VIEW3D_MT_object.append(menu_func)
     bpy.utils.register_class(STT_PT_panel)
+
+
   
 def unregister():
     print("Goodbye World!!")
     for (prop_name, prop_value) in PROPS:
         delattr(bpy.types.Scene, prop_name)
+    bpy.utils.unregister_class(STT_OT_Operator)
+    bpy.types.VIEW3D_MT_object.remove(menu_func)
     bpy.utils.unregister_class(STT_PT_panel)
