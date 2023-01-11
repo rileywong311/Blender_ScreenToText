@@ -22,8 +22,8 @@ class STT_offscreen():
                 self.width = round(render_width * fit_ratio)
                 self.height = round(render_height * fit_ratio)
 
-                font_proportion_width = round(self.width / 25)
-                font_proportion_height = round(self.height / 25)
+                font_proportion_width = round(self.width / bpy.context.scene.STT_font_proportion)
+                font_proportion_height = round(self.height / bpy.context.scene.STT_font_proportion)
                 
                 self.offscreen = gpu.types.GPUOffScreen(font_proportion_width, font_proportion_height)
                 
@@ -49,7 +49,7 @@ class STT_offscreen():
             context.region,
             view_matrix,
             projection_matrix,
-            do_color_management=True)
+            do_color_management=False)
     
     def draw_texture(self):
 #        print("Height = ", end="")
