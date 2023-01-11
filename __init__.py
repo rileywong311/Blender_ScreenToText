@@ -15,7 +15,6 @@ from . STT_panel import PROPS, STT_PT_panel
 
 
 def register():
-    print("Hello World!!")
     for (prop_name, prop_value) in PROPS:
         setattr(bpy.types.Scene, prop_name, prop_value)
     bpy.utils.register_class(STT_OT_Operator)
@@ -25,7 +24,6 @@ def register():
 
   
 def unregister():
-    print("Goodbye World!!")
     for (prop_name, prop_value) in PROPS:
         delattr(bpy.types.Scene, prop_name)
     bpy.utils.unregister_class(STT_OT_Operator)

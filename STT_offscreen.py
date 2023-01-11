@@ -7,9 +7,13 @@ from gpu_extras.presets import draw_texture_2d
 class STT_offscreen():
     def __init__(self):
         self.depsgraph = bpy.context.evaluated_depsgraph_get()
+        self.offscreen = None
         self.update_offscreen()
         
     def update_offscreen(self):
+        if self.offscreen:
+            self.offscreen.free()
+
         render_width = bpy.context.scene.render.resolution_x
         render_height = bpy.context.scene.render.resolution_y
         

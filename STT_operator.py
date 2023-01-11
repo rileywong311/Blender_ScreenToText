@@ -1,6 +1,7 @@
 import bpy
 
 from . STT_offscreen import STT_offscreen
+from . STT_font_drawer import STT_font
 
 class STT_OT_Operator(bpy.types.Operator):
     bl_idname = "object.screen_to_text_operator"
@@ -8,6 +9,7 @@ class STT_OT_Operator(bpy.types.Operator):
 
     def __init__(self):
         self.off_screen = STT_offscreen()
+        self.font_drawer = STT_font()
         self.invoked = False
         bpy.context.window_manager.modal_handler_add(self)
 
@@ -30,6 +32,7 @@ class STT_OT_Operator(bpy.types.Operator):
 
         if self.handler:
             self.off_screen.update_offscreen()
+            self.font_drawer.update_font()
         
         if event.type == 'Y' and self.handler:  # Apply
             bpy.types.SpaceView3D.draw_handler_remove(self.handler, 'WINDOW')
@@ -45,6 +48,7 @@ class STT_OT_Operator(bpy.types.Operator):
         #self.update_offscreen() doesnt work
         self.off_screen.draw_offscreen()
         self.off_screen.draw_texture()
+        self.font_drawer.draw_string_from_texture(self.off_screen.offscreen.texture_color.read(), self.off_screen.width, self.off_screen.height)
         
 def menu_func(self, context):
     self.layout.operator(STT_OT_Operator.bl_idname, text="Screen To Text Operator")

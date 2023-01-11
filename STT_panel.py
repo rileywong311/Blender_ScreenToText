@@ -17,7 +17,7 @@ def update_activated(self, value):
 PROPS = [
     ('STT_convert_text', bpy.props.StringProperty(name='Text', default='. - ; = / % & @ #')),
     ('STT_activated', bpy.props.BoolProperty(name='Activated', default=False, update=update_activated)),
-    ('STT_font_proportion', bpy.props.IntProperty(name='Font Proportion', default=25, min=1, max=150)),
+    ('STT_font_proportion', bpy.props.IntProperty(name='Font Proportion', default=25, min=8, max=150)),
     ('STT_font_choice', bpy.props.StringProperty(name='Font', default='cour.ttf'))
 ]
 
