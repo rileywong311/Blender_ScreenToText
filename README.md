@@ -30,6 +30,7 @@ This addon renders the current viewport (be it in solid view, material preview, 
 The current version of the addon is Blender 3.4.1
 
 ### To Do:
+- ability to render: as a .txt string or actual image
 - customizable blank background color
 - allow option for user to specify overlay dimensions rather than fit screen as much as possible
 - better handling of failed font pathing since only monospaced fonts will work well
