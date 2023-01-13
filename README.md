@@ -36,4 +36,4 @@ The current version of the addon is Blender 3.4.1
 - better handling of failed font pathing since only monospaced fonts will work well
 - customizable color of the font
 - allow user to specify color channel when mapping brightness to ASCII
-- dynamicallly change range values of "font sizer" function, right now the max font size is hardcoded at 250
+- dynamicallly change range values of "font sizer" function, right now the max assumed font size is hardcoded at 250
