@@ -16,9 +16,9 @@ This addon renders the current viewport (be it in solid view, material preview, 
 <img width="250" alt="image" src="https://user-images.githubusercontent.com/114180322/212216482-bd1bacdf-e890-48c8-bebd-c4d844621f0d.png">
 
 - Users can specify the set of ASCII text characters to screen project arbitrarily; the text scales left to right as darkest to brightest character. Spaces in the text specifier will be ignored. 
-- The activated check box is the only way to turn on and off the addon.
-- Font proportion will scale the font so that each character is the `viewport size / font porportion`
-- The font path allows the user to specify any font to use, however they will likely need to be monospace in order to function properly
+- The activated check box is the only way to turn on and off the addon operator.
+- Font proportion will scale the font so that each character is the `overlay size / font porportion`
+- The font path allows the user to specify any font to use, however the font will likely need to be monospace in order to function properly
 - Lock Camera to View is an already existing Blender function that is useful for this overlay since the projection comes from the camera.
 - The graph allows users to manually control how brightness levels will be matched to ASCII characters
 
