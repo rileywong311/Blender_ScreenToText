@@ -13,7 +13,6 @@ import bpy
 from . STT_operator import STT_OT_Operator, menu_func
 from . STT_panel import PROPS, STT_PT_panel
 
-
 def register():
     for (prop_name, prop_value) in PROPS:
         setattr(bpy.types.Scene, prop_name, prop_value)
@@ -21,10 +20,8 @@ def register():
     bpy.types.VIEW3D_MT_object.append(menu_func)
     bpy.utils.register_class(STT_PT_panel)
 
-
-  
 def unregister():
-    for (prop_name, prop_value) in PROPS:
+    for (prop_name, _) in PROPS:
         delattr(bpy.types.Scene, prop_name)
     bpy.utils.unregister_class(STT_OT_Operator)
     bpy.types.VIEW3D_MT_object.remove(menu_func)

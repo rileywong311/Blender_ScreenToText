@@ -3,11 +3,14 @@ import gpu
 import array
 from gpu_extras.presets import draw_texture_2d
 
-
 class STT_offscreen():
     def __init__(self):
         self.depsgraph = bpy.context.evaluated_depsgraph_get()
         self.offscreen = None
+        # TO DO: customizable blank background color
+        self.blank = [0.0, 0.0, 0.0, 1.0]
+        self.blank_texture = gpu.types.GPUTexture((1, 1), format='RGBA16F')
+        self.blank_texture.clear(format='FLOAT', value=self.blank)
         self.update_offscreen()
         
     def update_offscreen(self):
@@ -30,12 +33,7 @@ class STT_offscreen():
                 font_proportion_height = round(self.height / bpy.context.scene.STT_font_proportion)
                 
                 self.offscreen = gpu.types.GPUOffScreen(font_proportion_width, font_proportion_height)
-                
-                #self.offscreen = gpu.types.GPUOffScreen(self.width, self.height)
                 break
-
-        #self.offscreen = gpu.types.GPUOffScreen(self.width, self.height)
-        
         
     def draw_offscreen(self):
         context = bpy.context
@@ -55,6 +53,9 @@ class STT_offscreen():
             projection_matrix,
             do_color_management=False)
     
+    def draw_blank_texture(self):
+        draw_texture_2d(self.blank_texture, (0, 0), self.width, self.height)
+
     def draw_texture(self):
 #        print("Height = ", end="")
 #        print(len(self.offscreen.texture_color.read()))

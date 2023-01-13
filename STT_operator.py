@@ -34,7 +34,7 @@ class STT_OT_Operator(bpy.types.Operator):
             self.off_screen.update_offscreen()
             self.font_drawer.update_font()
         
-        if event.type == 'Y' and self.handler:  # Apply
+        if event.type == 'Y' and self.handler:
             bpy.types.SpaceView3D.draw_handler_remove(self.handler, 'WINDOW')
             self.handler = None
             
@@ -45,9 +45,9 @@ class STT_OT_Operator(bpy.types.Operator):
         return {'PASS_THROUGH'}
 
     def draw_callback(self):
-        #self.update_offscreen() doesnt work
         self.off_screen.draw_offscreen()
-        self.off_screen.draw_texture()
+        #self.off_screen.draw_texture()
+        self.off_screen.draw_blank_texture()
         self.font_drawer.draw_string_from_texture(self.off_screen.offscreen.texture_color.read(), self.off_screen.width, self.off_screen.height)
         
 def menu_func(self, context):

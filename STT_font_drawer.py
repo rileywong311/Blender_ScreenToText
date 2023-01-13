@@ -17,14 +17,13 @@ class STT_font():
             if os.path.exists(font_path):
                 self.font_id = blf.load(font_path)
             else:
-                # Default font.
-                self.font_id = 0
-            #blf.enable(self.font_id, blf.WORD_WRAP)
+                self.font_id = 0 # Default font.
+        # TO DO: customizable color
+        blf.color(self.font_id, 1,1,1,1)
     
     def draw_string_from_texture(self, texture, overlay_width, overlay_height):
-
+        # remove spaces in string, but add one at beginning for lowest value
         text = " " + bpy.context.scene.STT_convert_text.replace(" ", "")
-
 
         font_size = self.get_font_size(overlay_width)
         blf.size(self.font_id, font_size)
@@ -60,7 +59,6 @@ class STT_font():
         target = round(overlay_width / (overlay_width / bpy.context.scene.STT_font_proportion))
         # TO DO: change range values
         font_size = min(range(1,250), key=lambda x: self.compare_font_size(x, target))
-        print(font_size)
         return font_size
 
     def compare_font_size(self, font_size, target):
