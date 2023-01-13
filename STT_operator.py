@@ -10,19 +10,20 @@ class STT_OT_Operator(bpy.types.Operator):
     def __init__(self):
         self.off_screen = STT_offscreen()
         self.font_drawer = STT_font()
+
         self.invoked = False
         bpy.context.window_manager.modal_handler_add(self)
 
     def invoke(self, context, event):
         if not self.invoked:
             self.invoked = True
-            self.handler = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback, (), 'WINDOW', 'POST_PIXEL')
+            self.handler = self.add_handler()
             return {'RUNNING_MODAL'}
 
     def end(self):
         self.invoked = False
         if self.handler:
-            bpy.types.SpaceView3D.draw_handler_remove(self.handler, 'WINDOW')
+            self.remove_handler()
         self.handler = None
         return{'FINISHED'}
 
@@ -35,13 +36,12 @@ class STT_OT_Operator(bpy.types.Operator):
             self.font_drawer.update_font()
         
         if event.type == 'Y' and self.handler:
-            bpy.types.SpaceView3D.draw_handler_remove(self.handler, 'WINDOW')
+            self.remove_handler()
             self.handler = None
             
         elif event.type == 'Y' and not self.handler:
-            self.handler = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback, (), 'WINDOW', 'POST_PIXEL')
+            self.handler = self.add_handler()
         
-        #return {'RUNNING_MODAL'}
         return {'PASS_THROUGH'}
 
     def draw_callback(self):
@@ -49,7 +49,14 @@ class STT_OT_Operator(bpy.types.Operator):
         #self.off_screen.draw_texture()
         self.off_screen.draw_blank_texture()
         self.font_drawer.draw_string_from_texture(self.off_screen.offscreen.texture_color.read(), self.off_screen.width, self.off_screen.height)
-        
+
+    def add_handler(self):
+        return bpy.types.SpaceView3D.draw_handler_add(self.draw_callback, (), 'WINDOW', 'POST_PIXEL')
+
+    def remove_handler(self):
+        bpy.types.SpaceView3D.draw_handler_remove(self.handler, 'WINDOW')
+
+# needed to make the operator accessible in the f3 menu        
 def menu_func(self, context):
     self.layout.operator(STT_OT_Operator.bl_idname, text="Screen To Text Operator")
 
