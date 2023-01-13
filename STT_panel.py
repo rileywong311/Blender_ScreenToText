@@ -14,7 +14,7 @@ PROPS = [
 
 class STT_PT_panel(bpy.types.Panel):
     bl_idname = "STT_PT_panel"
-    bl_label = "Screen To Text Panel"
+    bl_label = "Screen To Text"
     bl_category = "Screen To Text"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'

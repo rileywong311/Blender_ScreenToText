@@ -56,7 +56,8 @@ class STT_OT_Operator(bpy.types.Operator):
     def remove_handler(self):
         bpy.types.SpaceView3D.draw_handler_remove(self.handler, 'WINDOW')
 
-# needed to make the operator accessible in the f3 menu        
-def menu_func(self, context):
-    self.layout.operator(STT_OT_Operator.bl_idname, text="Screen To Text Operator")
+# needed to make the operator accessible in the f3 menu
+# do not currently want this function
+# def menu_func(self, context):
+#     self.layout.operator(STT_OT_Operator.bl_idname, text="Screen To Text Operator")
 

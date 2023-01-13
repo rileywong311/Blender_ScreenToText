@@ -16,12 +16,12 @@ def register():
     for (prop_name, prop_value) in PROPS:
         setattr(types.Scene, prop_name, prop_value)
     utils.register_class(STT_OT_Operator)
-    types.VIEW3D_MT_object.append(menu_func)
+    #types.VIEW3D_MT_object.append(menu_func) do not currently want this
     utils.register_class(STT_PT_panel)
 
 def unregister():
     for (prop_name, _) in PROPS:
         delattr(types.Scene, prop_name)
     utils.unregister_class(STT_OT_Operator)
-    types.VIEW3D_MT_object.remove(menu_func)
+    #types.VIEW3D_MT_object.remove(menu_func)
     utils.unregister_class(STT_PT_panel)
