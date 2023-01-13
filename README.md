@@ -15,7 +15,7 @@ This addon renders the current viewport (be it in solid view, material preview, 
 
 <img width="250" alt="image" src="https://user-images.githubusercontent.com/114180322/212216482-bd1bacdf-e890-48c8-bebd-c4d844621f0d.png">
 
-- Users can specify the set of text characters they to project arbitrarily; the text scales left to right as darkest to brightest character. Spaces in the text specifier will be ignored. 
+- Users can specify the set of ASCII text characters to screen project arbitrarily; the text scales left to right as darkest to brightest character. Spaces in the text specifier will be ignored. 
 - The activated check box is the only way to turn on and off the addon.
 - Font proportion will scale the font so that each character is the `viewport size / font porportion`
 - The font path allows the user to specify any font to use, however they will likely need to be monospace in order to function properly
