@@ -69,3 +69,5 @@ class STT_offscreen():
     # not used but good for debugging
     def draw_texture(self):
         draw_texture_2d(self.offscreen.texture_color, (0, 0), self.width, self.height)
+
+    # TO DO: ability to render image
