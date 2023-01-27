@@ -3,6 +3,8 @@ import blf
 import os
 from . STT_curve_creator import curve_node_mapping
 
+#import time
+
 class STT_font():
 
     def __init__(self):
@@ -19,10 +21,13 @@ class STT_font():
             else:
                 # TO DO: better handler of failed font pathing since only monospaced fonts will work well
                 self.font_id = 0 # Default font.
-        # TO DO: customizable color
+        # TO DO: customizable text color
         blf.color(self.font_id, 1,1,1,1)
     
     def draw_string_from_texture(self, texture, overlay_width, overlay_height):
+
+        #time_start = time.time()
+
         # remove spaces in string, but add one at beginning for lowest value
         text = " " + bpy.context.scene.STT_convert_text.replace(" ", "")
 
@@ -41,8 +46,8 @@ class STT_font():
         c_map = ng.nodes[curve_node_mapping['STT_CustomCurve']].mapping
 
         row = 0
-        for i  in texture:
-            string = ""
+        for i in texture:
+            string = []
             for j in i:
                 # TO DO: color channel specifier in panel
                 x = 0
@@ -51,10 +56,12 @@ class STT_font():
                 x /= (3 * 255)   
                 y = c_map.evaluate(c_map.curves[3], x)
                 y = min(map_locations.keys(), key=lambda x: abs(map_locations[x] - y))
-                string += text[y] 
+                string.append(text[y]) 
             blf.position(self.font_id, 0, font_pixel_size*(row), 0)
             row+=1
-            blf.draw(self.font_id, string)
+            blf.draw(self.font_id, "".join(string))
+        
+        #print("Script Finished: %.4f secs" % (time.time() - time_start))
 
     def get_font_size(self, overlay_width):
         target = round(overlay_width / (overlay_width / bpy.context.scene.STT_font_proportion))

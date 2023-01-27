@@ -9,7 +9,7 @@ bl_info = {
 from bpy import types, utils
 
 # . syntax for relative path import works when read by Blender
-from . STT_operator import STT_OT_Operator, menu_func
+from . STT_operator import STT_OT_Operator #, menu_func
 from . STT_panel import PROPS, STT_PT_panel
 
 def register():
